@@ -3,34 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ไทยช่วยไทย</title>
+<title>ThaiHelpThai 60/40 v14</title>
 <style>
-html{-webkit-text-size-adjust:100%;}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;margin:0;padding:16px;color:#222;}
-.box{max-width:520px;margin:auto;background:#fff;border-radius:24px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.08);}
-.tabs{display:flex;gap:8px;margin-bottom:16px;}
-.tab{flex:1;padding:14px;border:none;border-radius:14px;font-size:17px;font-weight:700;}
-.active{background:#2f80ed;color:#fff;}
-.inactive{background:#e5e7eb;}
-.page{display:none}.show{display:block}
-h1{font-size:22px;text-align:center;margin:0 0 6px}
-.sub{font-size:14px;text-align:center;color:#666;margin-bottom:16px}
-label{font-size:17px;font-weight:700;display:block;margin-bottom:8px}
-input{width:100%;box-sizing:border-box;padding:14px;font-size:26px;border:2px solid #ccc;border-radius:16px}
-.card{margin-top:14px;padding:18px;border-radius:18px}
-.blue{background:#eaf4ff}
-.green{background:#eef9ef}
-.title{font-size:17px;font-weight:700}
-.value{font-size:30px;font-weight:800;margin-top:6px}
-.note{margin-top:10px;padding:12px;border-radius:12px;font-size:14px;line-height:1.5}
-.red{background:#ffe5e5;border:1px solid #eb5757}
-.yellow{background:#fff7d6;border:1px solid #e0b400}
-.btn{width:100%;padding:16px;border:none;border-radius:14px;margin-top:14px;font-size:18px;font-weight:700}
-.bluebtn{background:#2f80ed;color:white}
-.graybtn{background:#888;color:white}
-.item{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-top:10px;font-size:14px}
-.del{margin-top:8px;border:none;background:#ffe5e5;color:#b00020;padding:8px 10px;border-radius:10px;font-size:13px}
-.warn{padding:14px;border-radius:14px;margin:12px 0;font-weight:700}.yellow{background:#fff6d8;border:2px solid #e0b400}.red{background:#ffe0e0;border:2px solid #e55}</style>
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#efefef;margin:0;padding:20px;color:#222}
+.box{max-width:720px;margin:auto;background:#f7f7f7;border-radius:28px;padding:20px}
+.tabs{display:flex;gap:14px;margin-bottom:18px}
+.tab{flex:1;border:none;border-radius:22px;padding:18px;font-size:20px;font-weight:700}
+.active{background:#3b82f6;color:white}
+.inactive{background:#dfe1e5;color:#1d4ed8}
+.page{display:none}
+.show{display:block}
+h1{text-align:center;font-size:34px;margin:10px 0}
+.sub{text-align:center;color:#666;font-size:16px;margin-bottom:25px}
+label{font-size:24px;font-weight:700;display:block;margin-bottom:10px}
+input{width:100%;box-sizing:border-box;padding:22px;border:4px solid #cfcfcf;border-radius:24px;font-size:34px;margin-bottom:14px}
+.btn{width:100%;border:none;border-radius:22px;padding:20px;font-size:26px;font-weight:700;margin:14px 0}
+.bluebtn{background:#3b82f6;color:white}
+.graybtn{background:#999;color:white}
+.card{border-radius:26px;padding:24px;margin:16px 0}
+.blue{background:#e9f2ff}
+.green{background:#eaf6ea}
+.title{font-size:26px;font-weight:700}
+.value{font-size:56px;font-weight:800;margin-top:10px}
+.note{border-radius:18px;padding:16px;margin-top:14px;font-size:18px;line-height:1.5}
+.red{background:#ffe8e8;border:3px solid #ef5a5a;color:#b00020}
+.yellow{background:#fff5d9;border:3px solid #e7b800}
+.item{background:white;border:3px solid #ddd;border-radius:22px;padding:18px;margin-top:14px}
+.del{border:none;background:#ffe5e5;color:#b00020;border-radius:14px;padding:10px 14px;font-size:18px;margin-top:10px}
+.daybtn{background:#eef4ff;border:none;padding:10px 14px;border-radius:12px;margin-top:8px}
+</style>
+
+<style>
+html{
+  font-size:14px !important;
+  -webkit-text-size-adjust:85% !important;
+  text-size-adjust:85% !important;
+}
+body{
+  transform:scale(0.88);
+  transform-origin: top center;
+  width:113.6%;
+}
+</style>
 </head>
 <body>
 <div class="box">
@@ -46,9 +60,9 @@ input{width:100%;box-sizing:border-box;padding:14px;font-size:26px;border:2px so
 
 <label>ยอดซื้อทั้งหมด (บาท)</label>
 <input id="amount" inputmode="decimal">
-<div id="inputwarn" class="note red" style="display:none"></div>
-<button class="btn bluebtn" onclick="saveItem()">เพิ่มรายการวันนี้</button>
+<div id="inputwarn"></div>
 
+<button class="btn bluebtn" onclick="saveItem()">เพิ่มรายการวันนี้</button>
 
 <div class="card blue">
 <div class="title">รัฐช่วย 60%</div>
@@ -64,22 +78,17 @@ input{width:100%;box-sizing:border-box;padding:14px;font-size:26px;border:2px so
 
 <div class="card blue">
 <div class="title">ซื้อได้อีกวันนี้</div>
-<div id="dailyremain" class="value">333.33 บาท</div>
-<div id="dailyremainnote" style="font-size:14px;margin-top:6px"></div>
+<div id="dailyremain" class="value" style="font-size:46px">333.33 บาท</div>
+<div id="dailyremainnote" style="font-size:22px"></div>
 </div>
 
 <div class="card blue">
 <div class="title">ซื้อได้อีกเดือนนี้</div>
-<div id="monthremain" class="value">1,000.00 บาท</div>
+<div id="monthremain" class="value" style="font-size:46px">1,000.00 บาท</div>
 <div id="monthwarn"></div>
 </div>
 
-
-
-<div class="card">
-<div class="title">รายการวันนี้</div>
 <div id="todaylist"></div>
-</div>
 </div>
 
 <div id="month" class="page">
@@ -94,226 +103,157 @@ input{width:100%;box-sizing:border-box;padding:14px;font-size:26px;border:2px so
 const DAILY_CAP=200;
 const MONTH_CAP=1000;
 
-function fmt(n){return Number(n).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2})}
-
-function thaiNow(){
-return new Date().toLocaleString('th-TH',{timeZone:'Asia/Bangkok',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-}
-
+function fmt(n){return Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function getItems(){return JSON.parse(localStorage.getItem('items')||'[]')}
 function saveItems(a){localStorage.setItem('items',JSON.stringify(a))}
-
-function todayKey(){
-return new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Bangkok'});
+function todayKey(){return new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Bangkok'})}
+function nowThai(){
+return new Date().toLocaleString('th-TH',{timeZone:'Asia/Bangkok',dateStyle:'medium',timeStyle:'short'});
 }
-
-function getMonthUsed(){
-return getItems().reduce((a,b)=>a+b.gov,0)
-}
-
-function getTodayUsed(){
-return getItems().filter(x=>x.day===todayKey()).reduce((a,b)=>a+b.gov,0)
-}
+function monthUsed(){return getItems().reduce((a,b)=>a+(b.gov||0),0)}
+function todayUsed(){return getItems().filter(x=>x.day===todayKey()).reduce((a,b)=>a+(b.gov||0),0)}
 
 function calc(){
-let total=parseFloat(amount.value);
-inputwarn.style.display='none';
-govwarn.innerHTML='';
-userwarn.innerHTML='';
-monthwarn.innerHTML='';
+let total=parseFloat(document.getElementById('amount').value)||0;
+let inputwarn=document.getElementById('inputwarn');
+let govwarn=document.getElementById('govwarn');
+let userwarn=document.getElementById('userwarn');
 
-if(isNaN(total)||total<=0){
-gov.textContent='0.00 บาท';
-user.textContent='0.00 บาท';
+inputwarn.innerHTML=''; govwarn.innerHTML=''; userwarn.innerHTML='';
+
+if(total<=0){
+gov.innerHTML='0.00 บาท';
+user.innerHTML='0.00 บาท';
+renderRemain();
 return;
 }
 
-let todayRemain=Math.max(0,DAILY_CAP-getTodayUsed());
-let monthRemain=Math.max(0,MONTH_CAP-getMonthUsed());
-
+let tr=Math.max(0,DAILY_CAP-todayUsed());
+let mr=Math.max(0,MONTH_CAP-monthUsed());
 let gov60=total*0.6;
-let govReal=Math.min(gov60,todayRemain,monthRemain);
+let govReal=Math.min(gov60,tr,mr);
 let userReal=total-govReal;
 
-gov.textContent=fmt(govReal)+' บาท';
-user.textContent=fmt(userReal)+' บาท';
+gov.innerHTML=fmt(govReal)+' บาท';
+user.innerHTML=fmt(userReal)+' บาท';
 
 if(total>333.33){
-inputwarn.innerHTML='❗ ยอดซื้อเกิน 333.33 บาท';
-inputwarn.style.display='block';
+inputwarn.innerHTML='<div class="note red">❗ ยอดซื้อเกิน 333.33 บาท<br>รัฐช่วยได้สูงสุด 200 บาท / วัน</div>';
 }
 
 if(gov60>govReal){
-govwarn.innerHTML='<div class="note yellow">⚠️ ⚠️ รัฐช่วยได้สูงสุด 200 บาท / วัน</div>';
+govwarn.innerHTML='<div class="note yellow">⚠️ รัฐช่วยได้ตามสิทธิ์คงเหลือเท่านั้น<br>ใช้ได้สูงสุด 200 บาท / วัน</div>';
 }
 
+if(total>333.33){
 let over=total-333.33;
-if(over>0){
 let p=(userReal/total)*100;
-userwarn.innerHTML='<div class="note yellow">40% เดิม 133.33 + ส่วนเกิน '+fmt(over)+'<br>รวมประชาชนจ่าย '+fmt(userReal)+' ('+fmt(p)+'%)</div>';
+userwarn.innerHTML='<div class="note yellow">ยอดซื้อเกิน 333.33 บาท อยู่ '+fmt(over)+' บาท<br><br>ประชาชนจ่าย 133.33 บาท (40% เดิม)<br>+ จ่ายเพิ่มจากยอดเกิน '+fmt(over)+' บาท<br><br>รวมจ่ายจริง '+fmt(userReal)+' บาท ('+fmt(p)+'%)</div>';
 }
 
 renderRemain();
 }
 
 function renderRemain(){
-let todayRemain=Math.max(0,DAILY_CAP-getTodayUsed());
-let monthRemain=Math.max(0,MONTH_CAP-getMonthUsed());
+let tr=Math.max(0,DAILY_CAP-todayUsed());
+let mr=Math.max(0,MONTH_CAP-monthUsed());
 
-let totalBuyRemain=todayRemain/0.6;
-let userPart=totalBuyRemain*0.4;
+dailyremain.innerHTML='ซื้อได้อีก '+fmt(tr/0.6)+' บาท';
+dailyremainnote.innerHTML='(รัฐ '+fmt(tr)+' : ประชาชน '+fmt((tr/0.6)*0.4)+')';
 
-dailyremain.textContent='ซื้อได้อีก '+fmt(totalBuyRemain)+' บาท';
-dailyremainnote.innerHTML='(รัฐช่วย '+fmt(todayRemain)+' : ประชาชนจ่าย '+fmt(userPart)+')';
+monthremain.innerHTML=fmt(mr)+' บาท';
+let buy=mr/0.6;
+monthwarn.innerHTML='ยังซื้อได้รวมอีก '+fmt(buy)+' บาท<br>(รัฐ '+fmt(mr)+' : ประชาชน '+fmt(buy*0.4)+')';
 
-
-let monthBuyRemain = monthRemain/0.6;
-let monthUserRemain = monthBuyRemain*0.4;
-monthremain.textContent=fmt(monthRemain)+' บาท';
-monthwarn.innerHTML='<div style="font-size:14px;margin-top:8px">ยังซื้อได้รวมอีก '+fmt(monthBuyRemain)+' บาท<br>(รัฐช่วย '+fmt(monthRemain)+' : ประชาชนจ่าย '+fmt(monthUserRemain)+')</div>';
-if(monthRemain<=200 && monthRemain>0){
-monthwarn.innerHTML+='<div class="note yellow">⚠️ เหลือสิทธิ์รัฐเดือนนี้ '+fmt(monthRemain)+' บาท</div>';
+if(mr<=200 && mr>0){
+monthwarn.innerHTML+='<div class="note yellow">⚠️ เหลือสิทธิ์รัฐเดือนนี้ '+fmt(mr)+' บาท</div>';
 }
-if(monthRemain<=0){
-monthwarn.innerHTML='<div class="note red">❗ ใช้สิทธิ์เดือนนี้ครบแล้ว<br>ยอดถัดไปประชาชนจ่ายเองทั้งหมด</div>';
-}
-
-
-if(monthRemain<=200 && monthRemain>0){
-monthwarn.innerHTML='<div class="note yellow">⚠️ เหลือสิทธิ์เดือนนี้ '+fmt(monthRemain)+' บาท</div>';
-}
-if(monthRemain<=0){
+if(mr<=0){
 monthwarn.innerHTML='<div class="note red">❗ ใช้สิทธิ์เดือนนี้ครบแล้ว</div>';
 }
 }
 
 function saveItem(){
 let total=parseFloat(amount.value);
-if(isNaN(total)||total<=0){alert('กรุณากรอกยอด');return}
+if(!total||total<=0)return;
 
-let todayRemain=Math.max(0,DAILY_CAP-getTodayUsed());
-let monthRemain=Math.max(0,MONTH_CAP-getMonthUsed());
-let gov=Math.min(total*0.6,todayRemain,monthRemain);
+let tr=Math.max(0,DAILY_CAP-todayUsed());
+let mr=Math.max(0,MONTH_CAP-monthUsed());
+let gov=Math.min(total*0.6,tr,mr);
 let user=total-gov;
-
-if(!confirm('เพิ่มรายการวันนี้หรือไม่?')) return;
 
 let arr=getItems();
 arr.push({
+day:todayKey(),
+time:nowThai(),
 total:total,
 gov:gov,
-user:user,
-time:thaiNow(),
-day:todayKey()
+user:user
 });
 saveItems(arr);
-
-renderAll();
 amount.value='';
+renderAll();
 calc();
 }
 
+function renderToday(){
+let arr=getItems().filter(x=>x.day===todayKey());
+todaylist.innerHTML='<h2 style="margin-top:30px">รายการวันนี้</h2>';
+if(arr.length===0){todaylist.innerHTML+='<div class="item">ยังไม่มีรายการ</div>';return;}
+arr.forEach((x,i)=>{
+todaylist.innerHTML+=`
+<div class="item">
+<div style="font-size:24px;font-weight:800">${x.time}</div>
+<div>ยอดซื้อ ${fmt(x.total)}</div>
+<div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+<button class="del" onclick="deleteItem(${getItems().findIndex(a=>a.time===x.time&&a.total===x.total)})">🗑 ลบรายการ</button>
+</div>`;
+});
+}
+
+function renderMonth(){
+let arr=getItems();
+if(arr.length===0){monthlist.innerHTML='ยังไม่มีรายการ';return;}
+let groups={};
+arr.forEach((x,i)=>{
+if(!groups[x.day])groups[x.day]=[];
+groups[x.day].push({...x,index:i});
+});
+monthlist.innerHTML='';
+Object.keys(groups).forEach((d,idx)=>{
+let g=groups[d];
+let total=g.reduce((a,b)=>a+b.total,0);
+let gov=g.reduce((a,b)=>a+b.gov,0);
+let user=g.reduce((a,b)=>a+b.user,0);
+monthlist.innerHTML+=`
+<div class="item">
+<div style="font-size:24px;font-weight:800">${d}</div>
+<div>ยอดซื้อรวม ${fmt(total)} บาท</div>
+<div>รัฐช่วยรวม ${fmt(gov)} : ประชาชนรวม ${fmt(user)}</div>
+<button class="daybtn" onclick="toggleDay(${idx})">ดูรายการวันนี้ (${g.length} รายการ)</button>
+<div id="day${idx}" style="display:none;margin-top:10px">
+${g.map(x=>`
+<div style="border-top:1px solid #ddd;margin-top:8px;padding-top:8px">
+<div><b>${x.time}</b></div>
+<div>ยอดซื้อ ${fmt(x.total)}</div>
+<div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+<button class="del" onclick="deleteItem(${x.index})">🗑 ลบรายการ</button>
+</div>`).join('')}
+</div></div>`;
+});
+}
+
+function toggleDay(i){
+let e=document.getElementById('day'+i);
+e.style.display=e.style.display==='none'?'block':'none';
+}
+
 function deleteItem(i){
-if(confirm('ลบรายการนี้?')){
 let arr=getItems();
 arr.splice(i,1);
 saveItems(arr);
 renderAll();
 calc();
-}
-}
-
-function renderToday(){
-let arr=getItems().filter(x=>x.day===todayKey());
-if(arr.length===0){todaylist.innerHTML='ยังไม่มีรายการ';return}
-todaylist.innerHTML=arr.map((x,i)=>`
-<div class="item">
-<div><b>${x.time}</b></div>
-<div>ยอดซื้อ ${fmt(x.total)}</div>
-<div>รัฐ ${fmt(x.gov)} : ประชาชนจ่าย ${fmt(x.user)}</div>
-<button class="del" onclick="deleteItem(${getItems().indexOf(x)})">🗑 ลบรายการ</button>
-</div>`).join('');
-}
-
-
-
-function renderMonth(){
-let arr=getItems();
-let used=arr.reduce((a,b)=>a+b.gov,0);
-let remainGov=Math.max(0,1000-used);
-let remainBuy=(remainGov/0.6);
-let warn='';
-if(remainGov===0){
-warn='<div class="warn red">❗ สิทธิ์เดือนนี้ครบแล้ว<br>ยอดถัดไปประชาชนจ่ายเองทั้งหมด</div>';
-}else if(remainGov<=200){
-warn='<div class="warn yellow">⚠️ สิทธิ์เดือนนี้ใกล้หมด<br>รัฐช่วยได้อีก '+fmt(remainGov)+' บาท<br>ซื้อได้อีก '+fmt(remainBuy)+' บาท</div>';
-}
-if(arr.length===0){
-monthlist.innerHTML=warn+'ยังไม่มีรายการ';
-return
-}
-let groups={};
-arr.forEach((x,i)=>{
- if(!groups[x.day]) groups[x.day]=[];
- groups[x.day].push({...x,index:i});
-});
-monthlist.innerHTML=warn+Object.keys(groups).map((day,idx)=>{
- let g=groups[day];
- let total=g.reduce((a,b)=>a+b.total,0);
- let gov=g.reduce((a,b)=>a+b.gov,0);
- let user=g.reduce((a,b)=>a+b.user,0);
- return `
- <div class="item">
- <div style="font-size:22px;font-weight:800">${day}</div>
- <div>ยอดซื้อรวม ${fmt(total)} บาท</div>
- <div>รัฐช่วยรวม ${fmt(gov)} : ประชาชนรวม ${fmt(user)}</div>
- <button class="del" onclick="toggleDay(${idx})">ดูรายการวันนี้ (${g.length} รายการ)</button>
- <div id="day${idx}" style="display:none;margin-top:10px">
- ${g.map(x=>`
- <div style="border-top:1px solid #ddd;padding-top:8px;margin-top:8px">
- <div><b>${x.time}</b></div>
- <div>ยอดซื้อ ${fmt(x.total)}</div>
- <div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
- <button class="del" onclick="deleteItem(${x.index})">🗑 ลบรายการ</button>
- </div>`).join('')}
- </div>
- </div>`}).join('');
-}
-function toggleDay(i){
-let el=document.getElementById('day'+i);
-el.style.display=el.style.display==='none'?'block':'none';
-}
-);
-
-monthlist.innerHTML=Object.keys(groups).map(day=>{
- let g=groups[day];
- let total=g.reduce((a,b)=>a+b.total,0);
- let gov=g.reduce((a,b)=>a+b.gov,0);
- let user=g.reduce((a,b)=>a+b.user,0);
-
- return `
- <div class="item" style="margin-bottom:16px">
- <div style="font-size:18px;font-weight:800">${g[0].time.split(' ')[0]} ${g[0].time.split(' ')[1]}</div>
- <div style="margin-top:6px">ใช้ ${g.length} รายการ</div>
- <div>ยอดซื้อรวม ${fmt(total)} บาท</div>
- <div>รัฐช่วยรวม ${fmt(gov)} บาท</div>
- <div>ประชาชนรวม ${fmt(user)} บาท</div>
- <hr style="margin:10px 0">
- ${g.map(x=>`
- <div style="margin-bottom:12px">
- <div><b>${x.time}</b></div>
- <div>ยอดซื้อ ${fmt(x.total)}</div>
- <div>รัฐ ${fmt(x.gov)} : ประชาชนจ่าย ${fmt(x.user)}</div>
- <button class="del" onclick="deleteItem(${x.index})">🗑 ลบรายการ</button>
- </div>`).join('')}
- </div>`
-}).join('');
-}
-
-function renderAll(){
-renderToday();
-renderMonth();
-renderRemain();
 }
 
 function clearAll(){
@@ -322,6 +262,12 @@ localStorage.removeItem('items');
 renderAll();
 calc();
 }
+}
+
+function renderAll(){
+renderToday();
+renderMonth();
+renderRemain();
 }
 
 function showPage(p){
@@ -334,7 +280,7 @@ if(p==='daily') dtab.className='tab active';
 if(p==='month') mtab.className='tab active';
 }
 
-amount.addEventListener('input',calc);
+document.getElementById('amount').addEventListener('input',calc);
 renderAll();
 calc();
 </script>
