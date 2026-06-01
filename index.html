@@ -152,16 +152,16 @@ color:white;
 <div class="sub">กรอกยอดเต็ม แล้วระบบจะแยกให้</div>
 
 <label>ยอดซื้อทั้งหมด (บาท)</label>
-<input id="amount" inputmode="decimal"><div class="warn red" id="inputwarn" style="display:none;margin-top:12px;"></div>
+<input id="amount" inputmode="decimal"><div class="warn red" id="inputwarn" style="display:none;margin-top:8px;padding:10px 14px;font-size:16px;line-height:1.4;"></div>
 
 <div class="card state">
-<div class="cardtitle">รัฐช่วย</div>
+<div class="cardtitle">รัฐช่วย 60%</div>
 <div class="value" id="gov">0.00 บาท</div>
 <div class="warn yellow" id="govwarn"></div>
 </div>
 
 <div class="card user">
-<div class="cardtitle">ประชาชนจ่าย</div>
+<div class="cardtitle">ประชาชนจ่าย 40%</div>
 <div class="value" id="user">0.00 บาท</div>
 <div class="warn orange" id="userwarn"></div>
 </div>
@@ -268,7 +268,7 @@ return;
 }
 
 if(total>333.33){
-inputwarn.innerHTML='❗ ยอดนี้เกินโควต้าที่รัฐช่วยเต็ม 60% (333.33 บาท)<br><br>รัฐช่วยได้สูงสุด 200 บาท / วัน และยอดส่วนเกินประชาชนต้องจ่ายเอง';
+inputwarn.innerHTML='❗ ยอดนี้เกิน 333.33 บาท<br>รัฐช่วยได้สูงสุด 200 บาท / วัน';
 inputwarn.style.display='block';
 }
 
