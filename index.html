@@ -132,14 +132,15 @@ let userReal=total-govReal;
 gov.innerText=fmt(govReal)+' บาท';
 user.innerText=fmt(userReal)+' บาท';
 
-if(total>333.33){
-inputwarn.innerHTML='<div class="warn red">❗ ยอดซื้อเกิน 333.33 บาท<br>รัฐช่วยได้สูงสุด 200 บาท / วัน</div>';
+let dayTotal = getItems().filter(x=>x.day===todayKey()).reduce((a,b)=>a+b.total,0)+total;
+if(dayTotal>333.33){
+inputwarn.innerHTML='<div class="warn red">❗ ยอดรวมวันนี้เกิน 333.33 บาท<br>รัฐช่วยได้สูงสุด 200 บาท / วัน</div>';
 }
 if(gov60>govReal){
 govwarn.innerHTML='⚠️ ใช้สิทธิ์ได้อีก '+fmt((tr/0.6))+' บาท<br>รัฐ '+fmt(tr)+' • จ่ายเอง '+fmt((tr/0.6)*0.4);
 }
-if(total>333.33){
-userwarn.innerHTML='❗ ยอดนี้เกิน 333.33 บาท<br>รัฐช่วย '+fmt(govReal)+' • จ่ายเอง '+fmt(userReal);
+if(dayTotal>333.33){
+userwarn.innerHTML='❗ ยอดรวมวันนี้ '+fmt(dayTotal)+' บาท<br>รัฐช่วย '+fmt(govReal)+' • จ่ายเอง '+fmt(userReal);
 }
 renderRemain();
 }
