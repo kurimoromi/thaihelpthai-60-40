@@ -137,11 +137,9 @@ if(dayTotal>333.33){
 inputwarn.innerHTML='<div class="warn red">❗ ยอดรวมวันนี้เกิน 333.33 บาท<br>รัฐช่วยได้สูงสุด 200 บาท / วัน</div>';
 }
 if(gov60>govReal){
-govwarn.innerHTML='⚠️ ใช้สิทธิ์ได้อีก '+fmt((tr/0.6))+' บาท<br>รัฐ '+fmt(tr)+' • จ่ายเอง '+fmt((tr/0.6)*0.4);
+govwarn.innerHTML='ซื้อแบบ 60/40 ได้อีก '+fmt((tr/0.6))+' บาท<br>(รัฐ '+fmt(tr)+' : ประชาชน '+fmt((tr/0.6)*0.4)+')';
 }
-if(dayTotal>333.33){
-userwarn.innerHTML='❗ ยอดรวมวันนี้ '+fmt(dayTotal)+' บาท<br>รัฐช่วย '+fmt(govReal)+' • จ่ายเอง '+fmt(userReal);
-}
+
 renderRemain();
 }
 
@@ -149,7 +147,7 @@ function renderRemain(){
 let tr=Math.max(0,DAILY_CAP-todayUsed());
 let mr=Math.max(0,MONTH_CAP-monthUsed());
 dailyremain.innerText=fmt(tr/0.6)+' บาท';
-dailynote.innerHTML='(รัฐ '+fmt(tr)+' : ประชาชน '+fmt((tr/0.6)*0.4)+')';
+dailynote.innerHTML='ซื้อรวมแบบ 60/40 ได้อีก '+fmt(tr/0.6)+' บาท<br>(รัฐ '+fmt(tr)+' : ประชาชน '+fmt((tr/0.6)*0.4)+')';
 monthremain.innerText=fmt(mr)+' บาท';
 monthnote.innerHTML='ซื้อรวมแบบ 60/40 ได้อีก '+fmt(mr/0.6)+' บาท<br>(รัฐ '+fmt(mr)+' : ประชาชน '+fmt((mr/0.6)*0.4)+')';
 if(mr<=200 && mr>0) monthnote.innerHTML='<div class="warn yellow">⚠️ สิทธิ์เดือนเหลือ '+fmt(mr)+' บาท<br>ซื้อรวมได้อีก '+fmt(mr/0.6)+' บาท</div>';
