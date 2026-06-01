@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คำนวณสิทธิ์ 60/40</title>
+<style>
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#f5f6f8;
+  margin:0;
+  padding:20px;
+  color:#222;
+}
+.box{
+  max-width:520px;
+  margin:auto;
+  background:white;
+  border-radius:28px;
+  padding:30px;
+  box-shadow:0 8px 22px rgba(0,0,0,.08);
+}
+h1{
+  font-size:34px;
+  text-align:center;
+  margin:0 0 8px;
+}
+.sub{
+  text-align:center;
+  color:#666;
+  font-size:20px;
+  margin-bottom:28px;
+}
+label{
+  display:block;
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+input{
+  width:100%;
+  box-sizing:border-box;
+  font-size:38px;
+  padding:22px;
+  border:3px solid #cfcfcf;
+  border-radius:22px;
+}
+.cards{
+  margin-top:28px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.card{
+  background:#f1f3f5;
+  border-radius:24px;
+  padding:24px;
+}
+.cardtitle{
+  font-size:24px;
+  color:#555;
+}
+.value{
+  font-size:52px;
+  font-weight:800;
+  margin-top:8px;
+}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>คำนวณ 60 / 40</h1>
+<div class="sub">กรอกยอดเต็ม แล้วระบบจะแยกให้</div>
+
+<label>ยอดซื้อทั้งหมด (บาท)</label>
+<input id="amount" placeholder="เช่น 500" inputmode="decimal">
+
+<div class="cards">
+<div class="card">
+<div class="cardtitle">รัฐช่วย 60%</div>
+<div class="value" id="gov">0.00 บาท</div>
+</div>
+
+<div class="card">
+<div class="cardtitle">ประชาชนจ่าย 40%</div>
+<div class="value" id="user">0.00 บาท</div>
+</div>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const amountInput = document.getElementById('amount');
+  const gov = document.getElementById('gov');
+  const user = document.getElementById('user');
+
+  function update(){
+    let val = amountInput.value.replace(/,/g,'').trim();
+    let num = parseFloat(val);
+
+    if(isNaN(num)){
+      gov.textContent = '0.00 บาท';
+      user.textContent = '0.00 บาท';
+      return;
+    }
+
+    gov.textContent = (num*0.6).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' บาท';
+    user.textContent = (num*0.4).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' บาท';
+  }
+
+  amountInput.addEventListener('input', update);
+  update();
+});
+</script>
+</body>
+</html>
