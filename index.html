@@ -30,7 +30,7 @@ input{width:100%;box-sizing:border-box;padding:14px;font-size:26px;border:2px so
 .graybtn{background:#888;color:white}
 .item{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-top:10px;font-size:14px}
 .del{margin-top:8px;border:none;background:#ffe5e5;color:#b00020;padding:8px 10px;border-radius:10px;font-size:13px}
-</style>
+.warn{padding:14px;border-radius:14px;margin:12px 0;font-weight:700}.yellow{background:#fff6d8;border:2px solid #e0b400}.red{background:#ffe0e0;border:2px solid #e55}</style>
 </head>
 <body>
 <div class="box">
@@ -50,13 +50,8 @@ input{width:100%;box-sizing:border-box;padding:14px;font-size:26px;border:2px so
 <button class="btn bluebtn" onclick="saveItem()">เพิ่มรายการวันนี้</button>
 
 
-
-
 <div class="card blue">
-
 <div class="title">รัฐช่วย 60%</div>
-
-
 <div id="gov" class="value">0.00 บาท</div>
 <div id="govwarn"></div>
 </div>
@@ -149,7 +144,7 @@ inputwarn.style.display='block';
 }
 
 if(gov60>govReal){
-govwarn.innerHTML='<div class="note yellow">⚠️ รัฐช่วยได้ตามสิทธิ์คงเหลือเท่านั้น</div>';
+govwarn.innerHTML='<div class="note yellow">⚠️ ⚠️ รัฐช่วยได้สูงสุด 200 บาท / วัน</div>';
 }
 
 let over=total-333.33;
@@ -169,13 +164,13 @@ let totalBuyRemain=todayRemain/0.6;
 let userPart=totalBuyRemain*0.4;
 
 dailyremain.textContent='ซื้อได้อีก '+fmt(totalBuyRemain)+' บาท';
-dailyremainnote.innerHTML='(รัฐ '+fmt(todayRemain)+' : ประชาชน '+fmt(userPart)+')';
+dailyremainnote.innerHTML='(รัฐช่วย '+fmt(todayRemain)+' : ประชาชนจ่าย '+fmt(userPart)+')';
 
 
 let monthBuyRemain = monthRemain/0.6;
 let monthUserRemain = monthBuyRemain*0.4;
 monthremain.textContent=fmt(monthRemain)+' บาท';
-monthwarn.innerHTML='<div style="font-size:14px;margin-top:8px">ยังซื้อได้รวมอีก '+fmt(monthBuyRemain)+' บาท<br>(รัฐ '+fmt(monthRemain)+' : ประชาชน '+fmt(monthUserRemain)+')</div>';
+monthwarn.innerHTML='<div style="font-size:14px;margin-top:8px">ยังซื้อได้รวมอีก '+fmt(monthBuyRemain)+' บาท<br>(รัฐช่วย '+fmt(monthRemain)+' : ประชาชนจ่าย '+fmt(monthUserRemain)+')</div>';
 if(monthRemain<=200 && monthRemain>0){
 monthwarn.innerHTML+='<div class="note yellow">⚠️ เหลือสิทธิ์รัฐเดือนนี้ '+fmt(monthRemain)+' บาท</div>';
 }
@@ -235,49 +230,58 @@ todaylist.innerHTML=arr.map((x,i)=>`
 <div class="item">
 <div><b>${x.time}</b></div>
 <div>ยอดซื้อ ${fmt(x.total)}</div>
-<div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+<div>รัฐ ${fmt(x.gov)} : ประชาชนจ่าย ${fmt(x.user)}</div>
 <button class="del" onclick="deleteItem(${getItems().indexOf(x)})">🗑 ลบรายการ</button>
 </div>`).join('');
 }
 
 
+
 function renderMonth(){
 let arr=getItems();
-if(arr.length===0){monthlist.innerHTML='ยังไม่มีรายการ';return;}
+let used=arr.reduce((a,b)=>a+b.gov,0);
+let remainGov=Math.max(0,1000-used);
+let remainBuy=(remainGov/0.6);
+let warn='';
+if(remainGov===0){
+warn='<div class="warn red">❗ สิทธิ์เดือนนี้ครบแล้ว<br>ยอดถัดไปประชาชนจ่ายเองทั้งหมด</div>';
+}else if(remainGov<=200){
+warn='<div class="warn yellow">⚠️ สิทธิ์เดือนนี้ใกล้หมด<br>รัฐช่วยได้อีก '+fmt(remainGov)+' บาท<br>ซื้อได้อีก '+fmt(remainBuy)+' บาท</div>';
+}
+if(arr.length===0){
+monthlist.innerHTML=warn+'ยังไม่มีรายการ';
+return
+}
 let groups={};
 arr.forEach((x,i)=>{
- let d=x.day||x.date||'ไม่ทราบวัน';
- if(!groups[d]) groups[d]=[];
- groups[d].push({...x,index:i});
+ if(!groups[x.day]) groups[x.day]=[];
+ groups[x.day].push({...x,index:i});
 });
-monthlist.innerHTML=Object.keys(groups).map((d,idx)=>{
- let g=groups[d];
- let total=g.reduce((a,b)=>a+(b.total||0),0);
- let gov=g.reduce((a,b)=>a+(b.gov||0),0);
- let user=g.reduce((a,b)=>a+(b.user||0),0);
+monthlist.innerHTML=warn+Object.keys(groups).map((day,idx)=>{
+ let g=groups[day];
+ let total=g.reduce((a,b)=>a+b.total,0);
+ let gov=g.reduce((a,b)=>a+b.gov,0);
+ let user=g.reduce((a,b)=>a+b.user,0);
  return `
  <div class="item">
-   <div style="font-size:22px;font-weight:800">${d}</div>
-   <div>ยอดซื้อรวม ${fmt(total)} บาท</div>
-   <div>รัฐช่วยรวม ${fmt(gov)} : ประชาชนรวม ${fmt(user)}</div>
-   <button class="del" onclick="toggleDay(${idx})">ดูรายการวันนี้ (${g.length} รายการ)</button>
-   <div id="day${idx}" style="display:none;margin-top:10px">
-   ${g.map(x=>`
-      <div style="border-top:1px solid #ddd;padding-top:8px;margin-top:8px">
-        <div><b>${x.time||''}</b></div>
-        <div>ยอดซื้อ ${fmt(x.total||0)}</div>
-        <div>รัฐ ${fmt(x.gov||0)} : ประชาชน ${fmt(x.user||0)}</div>
-        <button class="del" onclick="deleteItem(${x.index})">🗑 ลบรายการ</button>
-      </div>
-   `).join('')}
-   </div>
- </div>`
-}).join('');
+ <div style="font-size:22px;font-weight:800">${day}</div>
+ <div>ยอดซื้อรวม ${fmt(total)} บาท</div>
+ <div>รัฐช่วยรวม ${fmt(gov)} : ประชาชนรวม ${fmt(user)}</div>
+ <button class="del" onclick="toggleDay(${idx})">ดูรายการวันนี้ (${g.length} รายการ)</button>
+ <div id="day${idx}" style="display:none;margin-top:10px">
+ ${g.map(x=>`
+ <div style="border-top:1px solid #ddd;padding-top:8px;margin-top:8px">
+ <div><b>${x.time}</b></div>
+ <div>ยอดซื้อ ${fmt(x.total)}</div>
+ <div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+ <button class="del" onclick="deleteItem(${x.index})">🗑 ลบรายการ</button>
+ </div>`).join('')}
+ </div>
+ </div>`}).join('');
 }
 function toggleDay(i){
- let el=document.getElementById('day'+i);
- if(!el)return;
- el.style.display=el.style.display==='none'?'block':'none';
+let el=document.getElementById('day'+i);
+el.style.display=el.style.display==='none'?'block':'none';
 }
 );
 
@@ -299,7 +303,7 @@ monthlist.innerHTML=Object.keys(groups).map(day=>{
  <div style="margin-bottom:12px">
  <div><b>${x.time}</b></div>
  <div>ยอดซื้อ ${fmt(x.total)}</div>
- <div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+ <div>รัฐ ${fmt(x.gov)} : ประชาชนจ่าย ${fmt(x.user)}</div>
  <button class="del" onclick="deleteItem(${x.index})">🗑 ลบรายการ</button>
  </div>`).join('')}
  </div>`
