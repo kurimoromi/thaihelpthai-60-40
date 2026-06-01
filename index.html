@@ -2,200 +2,88 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><style>html{-webkit-text-size-adjust:85%;}</style>
-<title>ไทยช่วยไทย 60/40</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ไทยช่วยไทย</title>
 <style>
-body{
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-background:#f5f6f8;
-margin:0;
-padding:16px;
-color:#222;
-}
-.box{
-max-width:520px;
-margin:auto;
-background:#fff;
-border-radius:28px;
-padding:26px;
-box-shadow:0 8px 22px rgba(0,0,0,.08);
-}
-.tabs{
-display:flex;
-gap:12px;
-margin-bottom:24px;
-}
-.tab{
-flex:1;
-padding:18px;
-font-size:17px;
-font-weight:700;
-border:none;
-border-radius:18px;
-}
-.active{
-background:#2f80ed;
-color:white;
-}
-.inactive{
-background:#e5e7eb;
-}
-.page{display:none;}
-.show{display:block;}
-
-h1{
-font-size:15px;
-text-align:center;
-margin:0;
-}
-.sub{
-font-size:16px;
-text-align:center;
-color:#666;
-margin:10px 0 26px;
-}
-label{
-display:block;
-font-size:17px;
-font-weight:700;
-margin-bottom:12px;
-}
-input{
-width:100%;
-box-sizing:border-box;
-font-size:15px;
-padding:16px;
-border:3px solid #cfcfcf;
-border-radius:22px;
-}
-.card{
-margin-top:18px;
-padding:24px;
-border-radius:24px;
-}
-.state{
-background:#eaf4ff;
-}
-.user{
-background:#eef9ef;
-}
-.monthcard{
-background:#f5f7fa;
-}
-.cardtitle{
-font-size:17px;
-font-weight:700;
-}
-.value{
-font-size:30px;
-font-weight:800;
-margin-top:8px;
-}
-.warn{
-margin-top:14px;
-padding:18px;
-border-radius:18px;
-font-size:15px;
-line-height:1.5;
-display:none;
-}
-.yellow{
-background:#fff3cd;
-border:2px solid #f2c94c;
-}
-.orange{
-background:#ffe8cc;
-border:2px solid #f2994a;
-}
-.red{
-background:#ffe5e5;
-border:2px solid #eb5757;
-}
-.blueinfo{
-margin-top:22px;
-background:#eaf4ff;
-border:2px solid #7ab7ff;
-padding:18px;
-border-radius:18px;
-font-size:17px;
-}
-.btn{
-width:100%;
-padding:16px;
-font-size:15px;
-border:none;
-border-radius:18px;
-margin-top:18px;
-font-weight:700;
-}
-.bluebtn{
-background:#2f80ed;
-color:white;
-}
-.graybtn{
-background:#888;
-color:white;
-}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;margin:0;padding:16px;color:#222;}
+.box{max-width:520px;margin:auto;background:#fff;border-radius:24px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.08);}
+.tabs{display:flex;gap:8px;margin-bottom:16px;}
+.tab{flex:1;padding:14px;border:none;border-radius:14px;font-size:17px;font-weight:700;}
+.active{background:#2f80ed;color:#fff;}
+.inactive{background:#e5e7eb;}
+.page{display:none}.show{display:block}
+h1{font-size:22px;text-align:center;margin:0 0 6px}
+.sub{font-size:14px;text-align:center;color:#666;margin-bottom:16px}
+label{font-size:17px;font-weight:700;display:block;margin-bottom:8px}
+input{width:100%;box-sizing:border-box;padding:14px;font-size:26px;border:2px solid #ccc;border-radius:16px}
+.card{margin-top:14px;padding:18px;border-radius:18px}
+.blue{background:#eaf4ff}
+.green{background:#eef9ef}
+.title{font-size:17px;font-weight:700}
+.value{font-size:30px;font-weight:800;margin-top:6px}
+.note{margin-top:10px;padding:12px;border-radius:12px;font-size:14px;line-height:1.5}
+.red{background:#ffe5e5;border:1px solid #eb5757}
+.yellow{background:#fff7d6;border:1px solid #e0b400}
+.btn{width:100%;padding:16px;border:none;border-radius:14px;margin-top:14px;font-size:18px;font-weight:700}
+.bluebtn{background:#2f80ed;color:white}
+.graybtn{background:#888;color:white}
+.item{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-top:10px;font-size:14px}
+.del{margin-top:8px;border:none;background:#ffe5e5;color:#b00020;padding:8px 10px;border-radius:10px;font-size:13px}
 </style>
 </head>
 <body>
-
 <div class="box">
 
 <div class="tabs">
-<button class="tab active" id="dailyTab" onclick="showPage('daily')">รายวัน</button>
-<button class="tab inactive" id="monthTab" onclick="showPage('month')">รายเดือน</button>
+<button id="dtab" class="tab active" onclick="showPage('daily')">รายวัน</button>
+<button id="mtab" class="tab inactive" onclick="showPage('month')">รายเดือน</button>
 </div>
 
 <div id="daily" class="page show">
 <h1>คำนวณรายวัน</h1>
-<div class="sub">กรอกยอดเต็ม แล้วระบบจะแยกให้</div>
+<div class="sub">กรอกยอดซื้อ แล้วเพิ่มรายการวันนี้</div>
 
 <label>ยอดซื้อทั้งหมด (บาท)</label>
-<input id="amount" inputmode="decimal"><div class="warn red" id="inputwarn" style="display:none;margin-top:8px;padding:10px 14px;font-size:16px;line-height:1.4;"></div>
+<input id="amount" inputmode="decimal">
+<div id="inputwarn" class="note red" style="display:none"></div>
 
-<div class="card state">
-<div class="cardtitle">รัฐช่วย 60%</div>
-<div class="value" id="gov">0.00 บาท</div>
-<div class="warn yellow" id="govwarn"></div>
+<div class="card blue">
+<div class="title">รัฐช่วย 60%</div>
+<div id="gov" class="value">0.00 บาท</div>
+<div id="govwarn"></div>
 </div>
 
-<div class="card user">
-<div class="cardtitle">ประชาชนจ่าย 40%</div>
-<div class="value" id="user">0.00 บาท</div>
-<div class="warn orange" id="userwarn"></div>
+<div class="card green">
+<div class="title">ประชาชนจ่าย 40%</div>
+<div id="user" class="value">0.00 บาท</div>
+<div id="userwarn"></div>
 </div>
 
-<div class="warn red" id="monthfull"></div>
-<div class="warn orange" id="highwarn"></div>
-
-<div class="blueinfo">
-ℹ️ ข้อมูลการใช้สิทธิ์เก็บในเครื่องนี้เท่านั้น
+<div class="card blue">
+<div class="title">สิทธิ์รายวันคงเหลือ</div>
+<div id="dailyremain" class="value">333.33 บาท</div>
+<div id="dailyremainnote" style="font-size:14px;margin-top:6px"></div>
 </div>
 
-<button class="btn bluebtn" onclick="saveReal()">บันทึกยอดนี้เป็นการใช้สิทธิ์จริง</button>
+<div class="card blue">
+<div class="title">สิทธิ์รายเดือนคงเหลือ</div>
+<div id="monthremain" class="value">1,000.00 บาท</div>
+<div id="monthwarn"></div>
+</div>
+
+<button class="btn bluebtn" onclick="saveItem()">เพิ่มรายการวันนี้</button>
+
+<div class="card">
+<div class="title">รายการวันนี้</div>
+<div id="todaylist"></div>
+</div>
 </div>
 
 <div id="month" class="page">
 <h1>สิทธิ์รายเดือน</h1>
-
-<div class="card state">
-<div class="cardtitle">ใช้สิทธิ์รัฐเดือนนี้แล้ว</div>
-<div class="value" id="used">0.00 บาท</div>
-</div>
-
-<div class="card user">
-<div class="cardtitle">เหลือสิทธิ์รัฐเดือนนี้</div>
-<div class="value" id="remain">1,000.00 บาท</div>
-<div class="warn yellow" id="remainwarn"></div>
-</div>
-
-
-<div class="card monthcard">
-<div class="cardtitle">ประวัติการใช้สิทธิ์เดือนนี้</div>
-<div id="history" style="margin-top:14px;font-size:15px;"></div>
-</div>
-<button class="btn graybtn" onclick="clearMonth()">ล้างข้อมูลเดือนนี้</button>
+<div id="monthlist"></div>
+<button class="btn graybtn" onclick="clearAll()">ล้างข้อมูลทั้งหมด</button>
 </div>
 
 </div>
@@ -204,106 +92,33 @@ color:white;
 const DAILY_CAP=200;
 const MONTH_CAP=1000;
 
-function fmt(n){
-return Number(n).toLocaleString('th-TH',{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-});
+function fmt(n){return Number(n).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+function thaiNow(){
+return new Date().toLocaleString('th-TH',{timeZone:'Asia/Bangkok',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 
-function showPage(page){
-document.getElementById('daily').classList.remove('show');
-document.getElementById('month').classList.remove('show');
-document.getElementById(page).classList.add('show');
+function getItems(){return JSON.parse(localStorage.getItem('items')||'[]')}
+function saveItems(a){localStorage.setItem('items',JSON.stringify(a))}
 
-dailyTab.className='tab inactive';
-monthTab.className='tab inactive';
-
-if(page==='daily') dailyTab.className='tab active';
-if(page==='month') monthTab.className='tab active';
-
-renderMonth();
-calc();
+function todayKey(){
+return new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Bangkok'});
 }
 
-function getHistory(){
-return JSON.parse(localStorage.getItem('monthHistory')||'[]');
+function getMonthUsed(){
+return getItems().reduce((a,b)=>a+b.gov,0)
 }
 
-function saveHistory(arr){
-localStorage.setItem('monthHistory',JSON.stringify(arr));
-}
-
-function getUsed(){
-return getHistory().reduce((a,b)=>a+b.gov,0);
-}
-
-function renderMonth(){
-let used=getUsed();
-let remain=Math.max(0,MONTH_CAP-used);
-
-document.getElementById('used').textContent=fmt(used)+' บาท';
-document.getElementById('remain').textContent=fmt(remain)+' บาท';
-
-renderHistory();
-
-let rw=document.getElementById('remainwarn');
-rw.style.display='none';
-
-if(remain<=200 && remain>0){
-rw.innerHTML='⚠️ เหลือสิทธิ์รัฐเดือนนี้น้อยแล้ว';
-rw.style.display='block';
-}
-if(remain<=0){
-rw.innerHTML='⚠️ ใช้สิทธิ์รัฐครบ 1,000 บาท / เดือนแล้ว';
-rw.style.display='block';
-}
-}
-
-
-function renderHistory(){
-let h=document.getElementById('history');
-let arr=getHistory();
-
-if(arr.length===0){
-h.innerHTML='<div style="color:#666;">ยังไม่มีรายการ</div>';
-return;
-}
-
-h.innerHTML=arr.map((x,i)=>`
-<div style="background:#fff;border:1px solid #ddd;border-radius:14px;padding:12px;margin-bottom:10px;">
-<div><b>ยอดซื้อ ${fmt(x.total)} บาท</b></div>
-<div>รัฐช่วย ${fmt(x.gov)} บาท</div>
-<button onclick="deleteItem(${i})" style="margin-top:8px;border:none;background:#ffe5e5;color:#c00;padding:8px 12px;border-radius:10px;font-size:14px;">🗑 ลบรายการนี้</button>
-</div>
-`).join('');
-}
-
-function deleteItem(i){
-if(confirm('ลบรายการนี้?')){
-let arr=getHistory();
-arr.splice(i,1);
-saveHistory(arr);
-renderMonth();
-calc();
-}
+function getTodayUsed(){
+return getItems().filter(x=>x.day===todayKey()).reduce((a,b)=>a+b.gov,0)
 }
 
 function calc(){
-let total=parseFloat(document.getElementById('amount').value);
-let gov=document.getElementById('gov');
-let user=document.getElementById('user');
-let govwarn=document.getElementById('govwarn');
-let userwarn=document.getElementById('userwarn');
-let highwarn=document.getElementById('highwarn');
-let monthfull=document.getElementById('monthfull');
-let inputwarn=document.getElementById('inputwarn');
-
-govwarn.style.display='none';
-userwarn.style.display='none';
-highwarn.style.display='none';
-monthfull.style.display='none';
+let total=parseFloat(amount.value);
 inputwarn.style.display='none';
+govwarn.innerHTML='';
+userwarn.innerHTML='';
+monthwarn.innerHTML='';
 
 if(isNaN(total)||total<=0){
 gov.textContent='0.00 บาท';
@@ -311,89 +126,141 @@ user.textContent='0.00 บาท';
 return;
 }
 
+let todayRemain=Math.max(0,DAILY_CAP-getTodayUsed());
+let monthRemain=Math.max(0,MONTH_CAP-getMonthUsed());
+
+let gov60=total*0.6;
+let govReal=Math.min(gov60,todayRemain,monthRemain);
+let userReal=total-govReal;
+
+gov.textContent=fmt(govReal)+' บาท';
+user.textContent=fmt(userReal)+' บาท';
+
 if(total>333.33){
-inputwarn.innerHTML='❗ เกิน 333.33 บาท';
+inputwarn.innerHTML='❗ ยอดซื้อเกิน 333.33 บาท';
 inputwarn.style.display='block';
 }
 
-if(total>10000){
-highwarn.innerHTML='⚠️ ยอดค่อนข้างสูง กรุณาตรวจสอบอีกครั้ง';
-highwarn.style.display='block';
+if(gov60>govReal){
+govwarn.innerHTML='<div class="note yellow">⚠️ รัฐช่วยได้ตามสิทธิ์คงเหลือเท่านั้น</div>';
 }
 
-let monthRemain=Math.max(0,MONTH_CAP-getUsed());
-
-let gov60=total*0.6;
-let govDaily=Math.min(gov60,DAILY_CAP);
-let govFinal=Math.min(govDaily,monthRemain);
-let userFinal=total-govFinal;
-
-gov.textContent=fmt(govFinal)+' บาท';
-user.textContent=fmt(userFinal)+' บาท';
-
-if(gov60>DAILY_CAP){
-let extra=gov60-DAILY_CAP;
-let userPercent=(userFinal/total)*100;
-
-govwarn.innerHTML='⚠️ รัฐช่วยได้สูงสุด 200 บาท / วัน';
-govwarn.style.display='block';
-
-let capBase = 333.33;
-let overPurchase = total - capBase;
-
-userwarn.innerHTML='⚠️ ยอดซื้อเกิน 333.33 บาท อยู่ '+fmt(overPurchase)+' บาท<br><br>ประชาชนจ่าย 133.33 บาท (40% เดิม)<br>+ จ่ายเพิ่มจากยอดเกิน '+fmt(overPurchase)+' บาท<br><br>รวมจ่ายจริง '+fmt(userFinal)+' บาท ('+fmt(userPercent)+'%)';
-userwarn.style.display='block';
+let over=total-333.33;
+if(over>0){
+let p=(userReal/total)*100;
+userwarn.innerHTML='<div class="note yellow">40% เดิม 133.33 + ส่วนเกิน '+fmt(over)+'<br>รวมประชาชนจ่าย '+fmt(userReal)+' ('+fmt(p)+'%)</div>';
 }
 
+renderRemain();
+}
+
+function renderRemain(){
+let todayRemain=Math.max(0,DAILY_CAP-getTodayUsed());
+let monthRemain=Math.max(0,MONTH_CAP-getMonthUsed());
+
+let totalBuyRemain=todayRemain/0.6;
+let userPart=totalBuyRemain*0.4;
+
+dailyremain.textContent=fmt(totalBuyRemain)+' บาท';
+dailyremainnote.innerHTML='(รัฐ '+fmt(todayRemain)+' : ประชาชน '+fmt(userPart)+')';
+
+monthremain.textContent=fmt(monthRemain)+' บาท';
+
+if(monthRemain<=200 && monthRemain>0){
+monthwarn.innerHTML='<div class="note yellow">⚠️ เหลือสิทธิ์เดือนนี้ '+fmt(monthRemain)+' บาท</div>';
+}
 if(monthRemain<=0){
-monthfull.innerHTML='⚠️ ใช้สิทธิ์รัฐครบ 1,000 บาท / เดือนแล้ว<br><br>ยอดนี้ประชาชนต้องจ่ายเต็ม';
-monthfull.style.display='block';
+monthwarn.innerHTML='<div class="note red">❗ ใช้สิทธิ์เดือนนี้ครบแล้ว</div>';
 }
 }
 
-document.getElementById('amount').addEventListener('input',calc);
+function saveItem(){
+let total=parseFloat(amount.value);
+if(isNaN(total)||total<=0){alert('กรุณากรอกยอด');return}
 
-function saveReal(){
-let total=parseFloat(document.getElementById('amount').value);
-if(isNaN(total)||total<=0){
-alert('กรุณากรอกยอดซื้อ');
-return;
-}
+let todayRemain=Math.max(0,DAILY_CAP-getTodayUsed());
+let monthRemain=Math.max(0,MONTH_CAP-getMonthUsed());
+let gov=Math.min(total*0.6,todayRemain,monthRemain);
+let user=total-gov;
 
-let gov60=total*0.6;
-let govFinal=Math.min(Math.min(gov60,DAILY_CAP),Math.max(0,MONTH_CAP-getUsed()));
+if(!confirm('เพิ่มรายการวันนี้หรือไม่?')) return;
 
-if(!confirm('บันทึกยอดนี้เป็นการใช้สิทธิ์จริงหรือไม่?\n\nรัฐช่วย '+fmt(govFinal)+' บาท')){
-return;
-}
-
-let arr=getHistory();
+let arr=getItems();
 arr.push({
-total: total,
-gov: govFinal
+total:total,
+gov:gov,
+user:user,
+time:thaiNow(),
+day:todayKey()
 });
-saveHistory(arr);
+saveItems(arr);
 
-let month=getUsed();
-let remain=Math.max(0,MONTH_CAP-month);
-
-alert('✅ บันทึกการใช้สิทธิ์แล้ว\n\nใช้แล้ว '+fmt(month)+' บาท\nเหลือ '+fmt(remain)+' บาท');
-
-renderMonth();
+renderAll();
+amount.value='';
 calc();
 }
 
-function clearMonth(){
-if(confirm('ล้างข้อมูลการใช้สิทธิ์เดือนนี้?')){
-localStorage.removeItem('monthHistory');
-renderMonth();
+function deleteItem(i){
+if(confirm('ลบรายการนี้?')){
+let arr=getItems();
+arr.splice(i,1);
+saveItems(arr);
+renderAll();
 calc();
 }
 }
 
+function renderToday(){
+let arr=getItems().filter(x=>x.day===todayKey());
+if(arr.length===0){todaylist.innerHTML='ยังไม่มีรายการ';return}
+todaylist.innerHTML=arr.map((x,i)=>`
+<div class="item">
+<div><b>${x.time}</b></div>
+<div>ยอดซื้อ ${fmt(x.total)}</div>
+<div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+<button class="del" onclick="deleteItem(${getItems().indexOf(x)})">🗑 ลบรายการ</button>
+</div>`).join('');
+}
+
+function renderMonth(){
+let arr=getItems();
+if(arr.length===0){monthlist.innerHTML='ยังไม่มีรายการ';return}
+monthlist.innerHTML=arr.map((x,i)=>`
+<div class="item">
+<div><b>${x.time}</b></div>
+<div>ยอดซื้อ ${fmt(x.total)}</div>
+<div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+<button class="del" onclick="deleteItem(${i})">🗑 ลบรายการ</button>
+</div>`).join('');
+}
+
+function renderAll(){
+renderToday();
 renderMonth();
+renderRemain();
+}
+
+function clearAll(){
+if(confirm('ล้างข้อมูลทั้งหมด?')){
+localStorage.removeItem('items');
+renderAll();
+calc();
+}
+}
+
+function showPage(p){
+daily.classList.remove('show');
+month.classList.remove('show');
+document.getElementById(p).classList.add('show');
+dtab.className='tab inactive';
+mtab.className='tab inactive';
+if(p==='daily') dtab.className='tab active';
+if(p==='month') mtab.className='tab active';
+}
+
+amount.addEventListener('input',calc);
+renderAll();
 calc();
 </script>
-
 </body>
 </html>
