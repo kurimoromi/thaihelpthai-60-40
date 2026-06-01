@@ -17,19 +17,42 @@ max-width:520px;
 margin:auto;
 background:#fff;
 border-radius:28px;
-padding:30px;
+padding:26px;
 box-shadow:0 8px 22px rgba(0,0,0,.08);
 }
+.tabs{
+display:flex;
+gap:12px;
+margin-bottom:24px;
+}
+.tab{
+flex:1;
+padding:18px;
+font-size:24px;
+font-weight:700;
+border:none;
+border-radius:18px;
+}
+.active{
+background:#2f80ed;
+color:white;
+}
+.inactive{
+background:#e5e7eb;
+}
+.page{display:none;}
+.show{display:block;}
+
 h1{
 font-size:34px;
 text-align:center;
 margin:0;
 }
 .sub{
-font-size:20px;
+font-size:19px;
 text-align:center;
 color:#666;
-margin:10px 0 28px;
+margin:10px 0 26px;
 }
 label{
 display:block;
@@ -45,20 +68,23 @@ padding:22px;
 border:3px solid #cfcfcf;
 border-radius:22px;
 }
-.cards{
-margin-top:28px;
-display:flex;
-flex-direction:column;
-gap:18px;
-}
 .card{
-background:#f1f3f5;
-border-radius:24px;
+margin-top:18px;
 padding:24px;
+border-radius:24px;
+}
+.state{
+background:#eaf4ff;
+}
+.user{
+background:#eef9ef;
+}
+.monthcard{
+background:#f5f7fa;
 }
 .cardtitle{
 font-size:24px;
-color:#555;
+font-weight:700;
 }
 .value{
 font-size:48px;
@@ -66,88 +92,112 @@ font-weight:800;
 margin-top:8px;
 }
 .warn{
-margin-top:20px;
-background:#fff3cd;
-border:2px solid #f2c94c;
-padding:20px;
-border-radius:20px;
-font-size:22px;
+margin-top:14px;
+padding:18px;
+border-radius:18px;
+font-size:21px;
 line-height:1.5;
 display:none;
 }
-.month{
-margin-top:28px;
-background:#eef6ff;
-padding:24px;
-border-radius:24px;
+.yellow{
+background:#fff3cd;
+border:2px solid #f2c94c;
+}
+.orange{
+background:#ffe8cc;
+border:2px solid #f2994a;
+}
+.red{
+background:#ffe5e5;
+border:2px solid #eb5757;
+}
+.blueinfo{
+margin-top:22px;
+background:#eaf4ff;
+border:2px solid #7ab7ff;
+padding:18px;
+border-radius:18px;
+font-size:20px;
 }
 .btn{
-margin-top:18px;
 width:100%;
 padding:20px;
 font-size:26px;
 border:none;
 border-radius:18px;
-background:#2d7ef7;
-color:white;
+margin-top:18px;
 font-weight:700;
 }
-.clear{
-background:#888;
+.bluebtn{
+background:#2f80ed;
+color:white;
 }
-.small{
-font-size:20px;
-color:#555;
-margin-top:8px;
+.graybtn{
+background:#888;
+color:white;
 }
 </style>
 </head>
 <body>
 
 <div class="box">
-<h1>คำนวณ 60 / 40</h1>
+
+<div class="tabs">
+<button class="tab active" id="dailyTab" onclick="showPage('daily')">รายวัน</button>
+<button class="tab inactive" id="monthTab" onclick="showPage('month')">รายเดือน</button>
+</div>
+
+<div id="daily" class="page show">
+<h1>คำนวณรายวัน</h1>
 <div class="sub">กรอกยอดเต็ม แล้วระบบจะแยกให้</div>
 
 <label>ยอดซื้อทั้งหมด (บาท)</label>
-<input id="amount" inputmode="decimal" placeholder="เช่น 450">
+<input id="amount" inputmode="decimal">
 
-<div class="cards">
-<div class="card">
+<div class="card state">
 <div class="cardtitle">รัฐช่วย</div>
 <div class="value" id="gov">0.00 บาท</div>
-<div class="small" id="govnote"></div>
+<div class="warn yellow" id="govwarn"></div>
 </div>
 
-<div class="card">
+<div class="card user">
 <div class="cardtitle">ประชาชนจ่าย</div>
 <div class="value" id="user">0.00 บาท</div>
-<div class="small" id="usernote"></div>
-</div>
+<div class="warn orange" id="userwarn"></div>
 </div>
 
-<div class="warn" id="warn"></div>
+<div class="warn red" id="monthfull"></div>
+<div class="warn orange" id="highwarn"></div>
 
-<div class="month">
-<div style="font-size:24px;font-weight:700;">ใช้สิทธิ์เดือนนี้แล้ว</div>
+<div class="blueinfo">
+ℹ️ ข้อมูลการใช้สิทธิ์เก็บในเครื่องนี้เท่านั้น
+</div>
+
+<button class="btn bluebtn" onclick="saveReal()">บันทึกยอดนี้เป็นการใช้สิทธิ์จริง</button>
+</div>
+
+<div id="month" class="page">
+<h1>สิทธิ์รายเดือน</h1>
+
+<div class="card state">
+<div class="cardtitle">ใช้สิทธิ์รัฐเดือนนี้แล้ว</div>
 <div class="value" id="used">0.00 บาท</div>
-<div class="small">จากโควต้ารัฐ 1,000 บาท / เดือน</div>
-
-<button class="btn" onclick="saveReal()">บันทึกยอดนี้เป็นการใช้สิทธิ์จริง</button>
-<button class="btn clear" onclick="clearMonth()">ล้างข้อมูลเดือนนี้</button>
 </div>
+
+<div class="card user">
+<div class="cardtitle">เหลือสิทธิ์รัฐเดือนนี้</div>
+<div class="value" id="remain">1,000.00 บาท</div>
+<div class="warn yellow" id="remainwarn"></div>
+</div>
+
+<button class="btn graybtn" onclick="clearMonth()">ล้างข้อมูลเดือนนี้</button>
+</div>
+
 </div>
 
 <script>
-const DAILY_CAP = 200;
-const MONTH_CAP = 1000;
-
-const amount = document.getElementById('amount');
-const gov = document.getElementById('gov');
-const user = document.getElementById('user');
-const govnote = document.getElementById('govnote');
-const usernote = document.getElementById('usernote');
-const warn = document.getElementById('warn');
-const used = document.getElementById('used');
+const DAILY_CAP=200;
+const MONTH_CAP=1000;
 
 function fmt(n){
 return Number(n).toLocaleString('th-TH',{
@@ -156,76 +206,134 @@ maximumFractionDigits:2
 });
 }
 
-function getMonthUsed(){
+function showPage(page){
+document.getElementById('daily').classList.remove('show');
+document.getElementById('month').classList.remove('show');
+document.getElementById(page).classList.add('show');
+
+dailyTab.className='tab inactive';
+monthTab.className='tab inactive';
+
+if(page==='daily') dailyTab.className='tab active';
+if(page==='month') monthTab.className='tab active';
+
+renderMonth();
+calc();
+}
+
+function getUsed(){
 return Number(localStorage.getItem('monthUsed')||0);
 }
 
 function renderMonth(){
-used.textContent = fmt(getMonthUsed()) + ' บาท';
+let used=getUsed();
+let remain=Math.max(0,MONTH_CAP-used);
+
+document.getElementById('used').textContent=fmt(used)+' บาท';
+document.getElementById('remain').textContent=fmt(remain)+' บาท';
+
+let rw=document.getElementById('remainwarn');
+rw.style.display='none';
+
+if(remain<=200 && remain>0){
+rw.innerHTML='⚠️ เหลือสิทธิ์รัฐเดือนนี้น้อยแล้ว';
+rw.style.display='block';
+}
+if(remain<=0){
+rw.innerHTML='⚠️ ใช้สิทธิ์รัฐครบ 1,000 บาท / เดือนแล้ว';
+rw.style.display='block';
+}
 }
 
 function calc(){
-let total = parseFloat(amount.value);
+let total=parseFloat(document.getElementById('amount').value);
+let gov=document.getElementById('gov');
+let user=document.getElementById('user');
+let govwarn=document.getElementById('govwarn');
+let userwarn=document.getElementById('userwarn');
+let highwarn=document.getElementById('highwarn');
+let monthfull=document.getElementById('monthfull');
 
-if(isNaN(total)){
+govwarn.style.display='none';
+userwarn.style.display='none';
+highwarn.style.display='none';
+monthfull.style.display='none';
+
+if(isNaN(total)||total<=0){
 gov.textContent='0.00 บาท';
 user.textContent='0.00 บาท';
-govnote.textContent='';
-usernote.textContent='';
-warn.style.display='none';
 return;
 }
 
-let gov60 = total*0.6;
-let govFinal = Math.min(gov60, DAILY_CAP);
-let userFinal = total - govFinal;
-
-gov.textContent = fmt(govFinal)+' บาท';
-user.textContent = fmt(userFinal)+' บาท';
-
-govnote.textContent='';
-usernote.textContent='';
-warn.style.display='none';
-
-if(gov60 > DAILY_CAP){
-let extra = gov60 - DAILY_CAP;
-let userPercent = (userFinal/total)*100;
-
-govnote.textContent='รัฐช่วยได้สูงสุด 200 บาท / วัน';
-usernote.textContent=
-'เกินโควต้ารัฐช่วย '+
-fmt(extra)+' บาท • ประชาชนจ่ายจริง '+fmt(userPercent)+'%';
-
-warn.innerHTML=
-'⚠️ รัฐช่วยได้สูงสุด 200 บาท / วัน<br><br>'+
-'ยอดนี้เกินโควต้ารัฐช่วย '+fmt(extra)+' บาท<br>'+
-'ประชาชนต้องจ่ายเพิ่มจากส่วนเกิน และจ่ายจริงรวม '+fmt(userPercent)+'% ของยอดซื้อ';
-warn.style.display='block';
-}
+if(total>10000){
+highwarn.innerHTML='⚠️ ยอดค่อนข้างสูง กรุณาตรวจสอบอีกครั้ง';
+highwarn.style.display='block';
 }
 
-function saveReal(){
-let total=parseFloat(amount.value);
-if(isNaN(total)) return;
+let monthRemain=Math.max(0,MONTH_CAP-getUsed());
 
 let gov60=total*0.6;
-let govFinal=Math.min(gov60,DAILY_CAP);
+let govDaily=Math.min(gov60,DAILY_CAP);
+let govFinal=Math.min(govDaily,monthRemain);
+let userFinal=total-govFinal;
 
-let month=getMonthUsed()+govFinal;
+gov.textContent=fmt(govFinal)+' บาท';
+user.textContent=fmt(userFinal)+' บาท';
+
+if(gov60>DAILY_CAP){
+let extra=gov60-DAILY_CAP;
+let userPercent=(userFinal/total)*100;
+
+govwarn.innerHTML='⚠️ รัฐช่วยได้สูงสุด 200 บาท / วัน';
+govwarn.style.display='block';
+
+userwarn.innerHTML='⚠️ เกินโควต้ารัฐช่วย '+fmt(extra)+' บาท<br><br>ประชาชนจ่ายจริง '+fmt(userPercent)+'%';
+userwarn.style.display='block';
+}
+
+if(monthRemain<=0){
+monthfull.innerHTML='⚠️ ใช้สิทธิ์รัฐครบ 1,000 บาท / เดือนแล้ว<br><br>ยอดนี้ประชาชนต้องจ่ายเต็ม';
+monthfull.style.display='block';
+}
+}
+
+document.getElementById('amount').addEventListener('input',calc);
+
+function saveReal(){
+let total=parseFloat(document.getElementById('amount').value);
+if(isNaN(total)||total<=0){
+alert('กรุณากรอกยอดซื้อ');
+return;
+}
+
+let gov60=total*0.6;
+let govFinal=Math.min(Math.min(gov60,DAILY_CAP),Math.max(0,MONTH_CAP-getUsed()));
+
+if(!confirm('บันทึกยอดนี้เป็นการใช้สิทธิ์จริงหรือไม่?\n\nรัฐช่วย '+fmt(govFinal)+' บาท')){
+return;
+}
+
+let month=getUsed()+govFinal;
 localStorage.setItem('monthUsed',month);
+
+let remain=Math.max(0,MONTH_CAP-month);
+
+alert('✅ บันทึกการใช้สิทธิ์แล้ว\n\nใช้แล้ว '+fmt(month)+' บาท\nเหลือ '+fmt(remain)+' บาท');
+
 renderMonth();
-alert('บันทึกการใช้สิทธิ์แล้ว');
+calc();
 }
 
 function clearMonth(){
 if(confirm('ล้างข้อมูลการใช้สิทธิ์เดือนนี้?')){
 localStorage.removeItem('monthUsed');
 renderMonth();
+calc();
 }
 }
 
-amount.addEventListener('input',calc);
 renderMonth();
+calc();
 </script>
 
 </body>
