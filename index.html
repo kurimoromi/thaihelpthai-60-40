@@ -32,19 +32,6 @@ input{width:100%;box-sizing:border-box;padding:22px;border:4px solid #cfcfcf;bor
 .del{border:none;background:#ffe5e5;color:#b00020;border-radius:14px;padding:10px 14px;font-size:18px;margin-top:10px}
 .daybtn{background:#eef4ff;border:none;padding:10px 14px;border-radius:12px;margin-top:8px}
 </style>
-
-<style>
-html{
-  font-size:14px !important;
-  -webkit-text-size-adjust:85% !important;
-  text-size-adjust:85% !important;
-}
-body{
-  transform:scale(0.88);
-  transform-origin: top center;
-  width:113.6%;
-}
-</style>
 </head>
 <body>
 <div class="box">
@@ -77,13 +64,13 @@ body{
 </div>
 
 <div class="card blue">
-<div class="title">ซื้อได้อีกวันนี้</div>
+<div class="title">ยังซื้อแบบ 60/40 ได้อีกวันนี้</div>
 <div id="dailyremain" class="value" style="font-size:46px">333.33 บาท</div>
 <div id="dailyremainnote" style="font-size:22px"></div>
 </div>
 
 <div class="card blue">
-<div class="title">ซื้อได้อีกเดือนนี้</div>
+<div class="title">สิทธิ์รัฐคงเหลือเดือนนี้</div>
 <div id="monthremain" class="value" style="font-size:46px">1,000.00 บาท</div>
 <div id="monthwarn"></div>
 </div>
@@ -142,7 +129,7 @@ inputwarn.innerHTML='<div class="note red">❗ ยอดซื้อเกิน
 }
 
 if(gov60>govReal){
-govwarn.innerHTML='<div class="note yellow">⚠️ รัฐช่วยได้ตามสิทธิ์คงเหลือเท่านั้น<br>ใช้ได้สูงสุด 200 บาท / วัน</div>';
+govwarn.innerHTML='<div class="note yellow">⚠️ รัฐช่วยได้ตามสิทธิ์คงเหลือเท่านั้น<br>รัฐช่วยได้สูงสุด 200 บาท / วัน</div>';
 }
 
 if(total>333.33){
@@ -159,11 +146,11 @@ let tr=Math.max(0,DAILY_CAP-todayUsed());
 let mr=Math.max(0,MONTH_CAP-monthUsed());
 
 dailyremain.innerHTML='ซื้อได้อีก '+fmt(tr/0.6)+' บาท';
-dailyremainnote.innerHTML='(รัฐ '+fmt(tr)+' : ประชาชน '+fmt((tr/0.6)*0.4)+')';
+dailyremainnote.innerHTML='(รัฐช่วย '+fmt(tr)+' : ประชาชน '+fmt((tr/0.6)*0.4)+')';
 
 monthremain.innerHTML=fmt(mr)+' บาท';
 let buy=mr/0.6;
-monthwarn.innerHTML='ยังซื้อได้รวมอีก '+fmt(buy)+' บาท<br>(รัฐ '+fmt(mr)+' : ประชาชน '+fmt(buy*0.4)+')';
+monthwarn.innerHTML='ยังซื้อรวมแบบ 60/40 ได้อีก (ยอดซื้อรวม) '+fmt(buy)+' บาท<br>(รัฐช่วย '+fmt(mr)+' : ประชาชน '+fmt(buy*0.4)+')';
 
 if(mr<=200 && mr>0){
 monthwarn.innerHTML+='<div class="note yellow">⚠️ เหลือสิทธิ์รัฐเดือนนี้ '+fmt(mr)+' บาท</div>';
