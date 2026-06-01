@@ -2,14 +2,14 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><style>html{-webkit-text-size-adjust:85%;}</style>
 <title>ไทยช่วยไทย 60/40</title>
 <style>
 body{
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 background:#f5f6f8;
 margin:0;
-padding:20px;
+padding:16px;
 color:#222;
 }
 .box{
@@ -44,7 +44,7 @@ background:#e5e7eb;
 .show{display:block;}
 
 h1{
-font-size:28px;
+font-size:15px;
 text-align:center;
 margin:0;
 }
@@ -63,8 +63,8 @@ margin-bottom:12px;
 input{
 width:100%;
 box-sizing:border-box;
-font-size:28px;
-padding:22px;
+font-size:15px;
+padding:16px;
 border:3px solid #cfcfcf;
 border-radius:22px;
 }
@@ -87,7 +87,7 @@ font-size:17px;
 font-weight:700;
 }
 .value{
-font-size:38px;
+font-size:30px;
 font-weight:800;
 margin-top:8px;
 }
@@ -95,7 +95,7 @@ margin-top:8px;
 margin-top:14px;
 padding:18px;
 border-radius:18px;
-font-size:18px;
+font-size:15px;
 line-height:1.5;
 display:none;
 }
@@ -121,8 +121,8 @@ font-size:17px;
 }
 .btn{
 width:100%;
-padding:20px;
-font-size:22px;
+padding:16px;
+font-size:15px;
 border:none;
 border-radius:18px;
 margin-top:18px;
@@ -190,6 +190,11 @@ color:white;
 <div class="warn yellow" id="remainwarn"></div>
 </div>
 
+
+<div class="card monthcard">
+<div class="cardtitle">ประวัติการใช้สิทธิ์เดือนนี้</div>
+<div id="history" style="margin-top:14px;font-size:15px;"></div>
+</div>
 <button class="btn graybtn" onclick="clearMonth()">ล้างข้อมูลเดือนนี้</button>
 </div>
 
@@ -221,8 +226,16 @@ renderMonth();
 calc();
 }
 
+function getHistory(){
+return JSON.parse(localStorage.getItem('monthHistory')||'[]');
+}
+
+function saveHistory(arr){
+localStorage.setItem('monthHistory',JSON.stringify(arr));
+}
+
 function getUsed(){
-return Number(localStorage.getItem('monthUsed')||0);
+return getHistory().reduce((a,b)=>a+b.gov,0);
 }
 
 function renderMonth(){
@@ -231,6 +244,8 @@ let remain=Math.max(0,MONTH_CAP-used);
 
 document.getElementById('used').textContent=fmt(used)+' บาท';
 document.getElementById('remain').textContent=fmt(remain)+' บาท';
+
+renderHistory();
 
 let rw=document.getElementById('remainwarn');
 rw.style.display='none';
@@ -242,6 +257,35 @@ rw.style.display='block';
 if(remain<=0){
 rw.innerHTML='⚠️ ใช้สิทธิ์รัฐครบ 1,000 บาท / เดือนแล้ว';
 rw.style.display='block';
+}
+}
+
+
+function renderHistory(){
+let h=document.getElementById('history');
+let arr=getHistory();
+
+if(arr.length===0){
+h.innerHTML='<div style="color:#666;">ยังไม่มีรายการ</div>';
+return;
+}
+
+h.innerHTML=arr.map((x,i)=>`
+<div style="background:#fff;border:1px solid #ddd;border-radius:14px;padding:12px;margin-bottom:10px;">
+<div><b>ยอดซื้อ ${fmt(x.total)} บาท</b></div>
+<div>รัฐช่วย ${fmt(x.gov)} บาท</div>
+<button onclick="deleteItem(${i})" style="margin-top:8px;border:none;background:#ffe5e5;color:#c00;padding:8px 12px;border-radius:10px;font-size:14px;">🗑 ลบรายการนี้</button>
+</div>
+`).join('');
+}
+
+function deleteItem(i){
+if(confirm('ลบรายการนี้?')){
+let arr=getHistory();
+arr.splice(i,1);
+saveHistory(arr);
+renderMonth();
+calc();
 }
 }
 
@@ -268,7 +312,7 @@ return;
 }
 
 if(total>333.33){
-inputwarn.innerHTML='❗ ยอดนี้เกิน 333.33 บาท<br>รัฐช่วยได้สูงสุด 200 บาท / วัน';
+inputwarn.innerHTML='❗ เกิน 333.33 บาท';
 inputwarn.style.display='block';
 }
 
@@ -323,9 +367,14 @@ if(!confirm('บันทึกยอดนี้เป็นการใช้�
 return;
 }
 
-let month=getUsed()+govFinal;
-localStorage.setItem('monthUsed',month);
+let arr=getHistory();
+arr.push({
+total: total,
+gov: govFinal
+});
+saveHistory(arr);
 
+let month=getUsed();
 let remain=Math.max(0,MONTH_CAP-month);
 
 alert('✅ บันทึกการใช้สิทธิ์แล้ว\n\nใช้แล้ว '+fmt(month)+' บาท\nเหลือ '+fmt(remain)+' บาท');
@@ -336,7 +385,7 @@ calc();
 
 function clearMonth(){
 if(confirm('ล้างข้อมูลการใช้สิทธิ์เดือนนี้?')){
-localStorage.removeItem('monthUsed');
+localStorage.removeItem('monthHistory');
 renderMonth();
 calc();
 }
