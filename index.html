@@ -152,7 +152,7 @@ color:white;
 <div class="sub">กรอกยอดเต็ม แล้วระบบจะแยกให้</div>
 
 <label>ยอดซื้อทั้งหมด (บาท)</label>
-<input id="amount" inputmode="decimal">
+<input id="amount" inputmode="decimal"><div class="warn red" id="inputwarn" style="display:none;margin-top:12px;"></div>
 
 <div class="card state">
 <div class="cardtitle">รัฐช่วย</div>
@@ -253,16 +253,23 @@ let govwarn=document.getElementById('govwarn');
 let userwarn=document.getElementById('userwarn');
 let highwarn=document.getElementById('highwarn');
 let monthfull=document.getElementById('monthfull');
+let inputwarn=document.getElementById('inputwarn');
 
 govwarn.style.display='none';
 userwarn.style.display='none';
 highwarn.style.display='none';
 monthfull.style.display='none';
+inputwarn.style.display='none';
 
 if(isNaN(total)||total<=0){
 gov.textContent='0.00 บาท';
 user.textContent='0.00 บาท';
 return;
+}
+
+if(total>333.33){
+inputwarn.innerHTML='❗ ยอดนี้เกินโควต้าที่รัฐช่วยเต็ม 60% (333.33 บาท)<br><br>รัฐช่วยได้สูงสุด 200 บาท / วัน และยอดส่วนเกินประชาชนต้องจ่ายเอง';
+inputwarn.style.display='block';
 }
 
 if(total>10000){
