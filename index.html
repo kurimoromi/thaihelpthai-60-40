@@ -161,10 +161,21 @@ let monthRemain=Math.max(0,MONTH_CAP-getMonthUsed());
 let totalBuyRemain=todayRemain/0.6;
 let userPart=totalBuyRemain*0.4;
 
-dailyremain.textContent=fmt(totalBuyRemain)+' บาท';
+dailyremain.textContent='ซื้อได้อีก '+fmt(totalBuyRemain)+' บาท';
 dailyremainnote.innerHTML='(รัฐ '+fmt(todayRemain)+' : ประชาชน '+fmt(userPart)+')';
 
+
+let monthBuyRemain = monthRemain/0.6;
+let monthUserRemain = monthBuyRemain*0.4;
 monthremain.textContent=fmt(monthRemain)+' บาท';
+monthwarn.innerHTML='<div style="font-size:14px;margin-top:8px">ยังซื้อได้รวมอีก '+fmt(monthBuyRemain)+' บาท<br>(รัฐ '+fmt(monthRemain)+' : ประชาชน '+fmt(monthUserRemain)+')</div>';
+if(monthRemain<=200 && monthRemain>0){
+monthwarn.innerHTML+='<div class="note yellow">⚠️ เหลือสิทธิ์รัฐเดือนนี้ '+fmt(monthRemain)+' บาท</div>';
+}
+if(monthRemain<=0){
+monthwarn.innerHTML='<div class="note red">❗ ใช้สิทธิ์เดือนนี้ครบแล้ว<br>ยอดถัดไปประชาชนจ่ายเองทั้งหมด</div>';
+}
+
 
 if(monthRemain<=200 && monthRemain>0){
 monthwarn.innerHTML='<div class="note yellow">⚠️ เหลือสิทธิ์เดือนนี้ '+fmt(monthRemain)+' บาท</div>';
@@ -225,13 +236,36 @@ todaylist.innerHTML=arr.map((x,i)=>`
 function renderMonth(){
 let arr=getItems();
 if(arr.length===0){monthlist.innerHTML='ยังไม่มีรายการ';return}
-monthlist.innerHTML=arr.map((x,i)=>`
-<div class="item">
-<div><b>${x.time}</b></div>
-<div>ยอดซื้อ ${fmt(x.total)}</div>
-<div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
-<button class="del" onclick="deleteItem(${i})">🗑 ลบรายการ</button>
-</div>`).join('');
+
+let groups={};
+arr.forEach((x,i)=>{
+ if(!groups[x.day]) groups[x.day]=[];
+ groups[x.day].push({...x,index:i});
+});
+
+monthlist.innerHTML=Object.keys(groups).map(day=>{
+ let g=groups[day];
+ let total=g.reduce((a,b)=>a+b.total,0);
+ let gov=g.reduce((a,b)=>a+b.gov,0);
+ let user=g.reduce((a,b)=>a+b.user,0);
+
+ return `
+ <div class="item" style="margin-bottom:16px">
+ <div style="font-size:18px;font-weight:800">${g[0].time.split(' ')[0]} ${g[0].time.split(' ')[1]}</div>
+ <div style="margin-top:6px">ใช้ ${g.length} รายการ</div>
+ <div>ยอดซื้อรวม ${fmt(total)} บาท</div>
+ <div>รัฐช่วยรวม ${fmt(gov)} บาท</div>
+ <div>ประชาชนรวม ${fmt(user)} บาท</div>
+ <hr style="margin:10px 0">
+ ${g.map(x=>`
+ <div style="margin-bottom:12px">
+ <div><b>${x.time}</b></div>
+ <div>ยอดซื้อ ${fmt(x.total)}</div>
+ <div>รัฐ ${fmt(x.gov)} : ประชาชน ${fmt(x.user)}</div>
+ <button class="del" onclick="deleteItem(${x.index})">🗑 ลบรายการ</button>
+ </div>`).join('')}
+ </div>`
+}).join('');
 }
 
 function renderAll(){
