@@ -139,7 +139,9 @@ inputwarn.innerHTML='<div class="warn red">❗ ยอดรวมวันนี
 if(gov60>govReal){
 govwarn.innerHTML='ซื้อแบบ 60/40 ได้อีก '+fmt((tr/0.6))+' บาท<br>(รัฐ '+fmt(tr)+' : ประชาชน '+fmt((tr/0.6)*0.4)+')';
 }
-
+if(dayTotal>333.33){
+userwarn.innerHTML='จ่ายจริง '+fmt(userReal)+' บาท';
+}
 renderRemain();
 }
 
