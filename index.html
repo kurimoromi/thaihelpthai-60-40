@@ -28,7 +28,7 @@ margin-bottom:24px;
 .tab{
 flex:1;
 padding:18px;
-font-size:24px;
+font-size:17px;
 font-weight:700;
 border:none;
 border-radius:18px;
@@ -44,26 +44,26 @@ background:#e5e7eb;
 .show{display:block;}
 
 h1{
-font-size:34px;
+font-size:28px;
 text-align:center;
 margin:0;
 }
 .sub{
-font-size:19px;
+font-size:16px;
 text-align:center;
 color:#666;
 margin:10px 0 26px;
 }
 label{
 display:block;
-font-size:24px;
+font-size:17px;
 font-weight:700;
 margin-bottom:12px;
 }
 input{
 width:100%;
 box-sizing:border-box;
-font-size:38px;
+font-size:28px;
 padding:22px;
 border:3px solid #cfcfcf;
 border-radius:22px;
@@ -83,11 +83,11 @@ background:#eef9ef;
 background:#f5f7fa;
 }
 .cardtitle{
-font-size:24px;
+font-size:17px;
 font-weight:700;
 }
 .value{
-font-size:48px;
+font-size:38px;
 font-weight:800;
 margin-top:8px;
 }
@@ -95,7 +95,7 @@ margin-top:8px;
 margin-top:14px;
 padding:18px;
 border-radius:18px;
-font-size:21px;
+font-size:18px;
 line-height:1.5;
 display:none;
 }
@@ -117,12 +117,12 @@ background:#eaf4ff;
 border:2px solid #7ab7ff;
 padding:18px;
 border-radius:18px;
-font-size:20px;
+font-size:17px;
 }
 .btn{
 width:100%;
 padding:20px;
-font-size:26px;
+font-size:22px;
 border:none;
 border-radius:18px;
 margin-top:18px;
@@ -294,7 +294,10 @@ let userPercent=(userFinal/total)*100;
 govwarn.innerHTML='⚠️ รัฐช่วยได้สูงสุด 200 บาท / วัน';
 govwarn.style.display='block';
 
-userwarn.innerHTML='⚠️ เกินโควต้ารัฐช่วย '+fmt(extra)+' บาท<br><br>ประชาชนจ่ายจริง '+fmt(userPercent)+'%';
+let capBase = 333.33;
+let overPurchase = total - capBase;
+
+userwarn.innerHTML='⚠️ ยอดซื้อเกิน 333.33 บาท อยู่ '+fmt(overPurchase)+' บาท<br><br>ประชาชนจ่าย 133.33 บาท (40% เดิม)<br>+ จ่ายเพิ่มจากยอดเกิน '+fmt(overPurchase)+' บาท<br><br>รวมจ่ายจริง '+fmt(userFinal)+' บาท ('+fmt(userPercent)+'%)';
 userwarn.style.display='block';
 }
 
